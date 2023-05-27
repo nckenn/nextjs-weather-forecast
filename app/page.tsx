@@ -1,6 +1,8 @@
 import Auth0SignInButton  from '@/components/auth0-signin-button';
+import { buttonVariants } from '@/components/ui/button';
 import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth';
+import Link from 'next/link';
 
 
 export default async function Home() {
@@ -16,7 +18,7 @@ export default async function Home() {
       </div>
       <div className="flex gap-4 mt-4">
         {
-          !session ? <Auth0SignInButton></Auth0SignInButton> : ""
+          !session ? <Auth0SignInButton></Auth0SignInButton> : <Link href='/home' className={buttonVariants()}>Go to home</Link>
         }
       </div>
     </section>

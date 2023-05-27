@@ -21,7 +21,7 @@ export default async function Home() {
 
   const githubProfile = await getGithubInfo(session?.user?.name as string)
   return (
-    <section className="container flex flex-col items-center gap-6 pb-8 pt-6 md:py-10 max-w-4xl">
+    <section className="container flex flex-col items-center gap-6 pb-8 pt-6 md:py-10 sm:max-w-4xl">
         <div className="flex-auto text-center">
           <p>{githubProfile?.name}</p>
           <p>{githubProfile?.html_url}</p>

@@ -17,11 +17,11 @@ export function SearchWeatherForm() {
 
     return (
         <form
-            className="w-1/2 flex flex-col gap-4 items-center mt-4"
+            className="w-full sm:w-1/2 flex flex-col gap-4 items-center mt-4"
             onSubmit={submitHandler}
         >
             <Input placeholder="Search a city" onChange={(e) => setCity(e.target.value)}></Input>
-            <Button type="submit" className="w-1/2">Display Weather</Button>
+            <Button type="submit" className="sm:w-1/2">Display Weather</Button>
         </form>
        
     )
