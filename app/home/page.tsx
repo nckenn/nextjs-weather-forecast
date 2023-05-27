@@ -1,27 +1,30 @@
-'use client'
 
-import { Icons } from '@/components/icons'
-import { Button, buttonVariants } from '@/components/ui/button'
-import Image from 'next/image'
-import Link from 'next/link'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { redirect } from 'next/navigation'
+import { SearchWeatherForm } from '@/components/search-weather-form'
 
-import { useSession } from 'next-auth/react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+export default async function Home() {
+  const session = await getServerSession(authOptions)
 
-export default function Home() {
+  if (!session) {
+    redirect('/')
+  }
+
   
-  const { data: session } = useSession({
-    required: true
-  })
-
   return (
-    <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10 ">
-        <Avatar className="h-8 w-8">
+    <section className="container flex flex-col items-center gap-6 pb-8 pt-6 md:py-10 max-w-4xl">
+        {/* <Avatar className="h-8 w-8">
             <AvatarImage src={session?.user?.image as string} alt="" />
             <AvatarFallback></AvatarFallback>
-          </Avatar>
-        <p>{session?.user?.name}</p>
-        <p>{session?.user?.email}</p>
+          </Avatar> */}
+        <div className="flex-auto text-center">
+          <p>{session?.user?.name}</p>
+          <p>{session?.user?.email}</p>
+        </div>
+        
+        <SearchWeatherForm></SearchWeatherForm>
+  
     </section>
   )
 }
