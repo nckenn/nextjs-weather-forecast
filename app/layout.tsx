@@ -49,7 +49,6 @@ export default function RootLayout({
               <SiteHeader></SiteHeader>
               <div className="flex-1">{children}</div>
             </div>
-            <TailwindIndicator />
           </ThemeProvider>
         </Provider>
       </body>
