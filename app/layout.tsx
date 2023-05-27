@@ -5,7 +5,6 @@ import { siteConfig } from '@/config/site'
 import { cn } from "@/lib/utils"
 import { fontSans } from '@/lib/fonts'
 
-import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SiteHeader } from '@/components/site-header'
 import Provider from "@/components/provider"
