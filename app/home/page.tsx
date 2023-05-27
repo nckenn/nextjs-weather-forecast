@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { SearchWeatherForm } from '@/components/search-weather-form'
 import axios from 'axios';
+import { GithubUser } from '@/types/github-user';
 
 async function getGithubInfo(username: string) {
   const url = `https://api.github.com/users/${username}`;
@@ -19,12 +20,13 @@ export default async function Home() {
     redirect('/')
   }
 
-  const githubProfile = await getGithubInfo(session?.user?.name as string)
+  const githubUser = await getGithubInfo(session?.user?.name as string) as GithubUser
+  
   return (
     <section className="container flex flex-col items-center gap-6 pb-8 pt-6 md:py-10 sm:max-w-4xl">
         <div className="flex-auto text-center">
-          <p>{githubProfile?.name}</p>
-          <p>{githubProfile?.html_url}</p>
+          <p>{githubUser?.name}</p>
+          <p>{githubUser?.html_url}</p>
         </div>
         
         <SearchWeatherForm></SearchWeatherForm>

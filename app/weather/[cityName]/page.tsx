@@ -5,15 +5,12 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 import axios, { AxiosError } from 'axios'
+import { Weather, WeatherElement } from '@/types/weather'
 
 type PageProps = {
   params: {
     cityName: string
   }
-}
-
-interface Weather {
-  [key: string]: any
 }
 
 async function getWeatherByCity(cityName: string) {
@@ -42,7 +39,7 @@ const Page = async({ params }: PageProps) => {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/')
   
-  const weatherInfo = await getWeatherByCity(cityName);
+  const weatherInfo = await getWeatherByCity(cityName) as Weather;
   
   const dt = getFormattedDate(weatherInfo?.dt);
 
@@ -61,7 +58,7 @@ const Page = async({ params }: PageProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {weatherInfo.weather.map((weather: Weather) => (
+          {weatherInfo.weather.map((weather: WeatherElement) => (
             <TableRow key={weather?.id}>
               <TableCell>{dt}</TableCell>
               <TableCell>{weatherInfo?.main?.temp}</TableCell>
