@@ -1,8 +1,11 @@
 import Auth0SignInButton  from '@/components/auth0-signin-button';
+import { authOptions } from '@/lib/auth';
+import { getServerSession } from 'next-auth';
 
 
-export default function Home() {
-
+export default async function Home() {
+  const session = await getServerSession(authOptions)
+  
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10 max-w-4xl mt-12">
       <div className="flex max-w-[980px] flex-col items-start gap-2">
@@ -12,7 +15,9 @@ export default function Home() {
         </p>
       </div>
       <div className="flex gap-4 mt-4">
-        <Auth0SignInButton></Auth0SignInButton>
+        {
+          !session ? <Auth0SignInButton></Auth0SignInButton> : ""
+        }
       </div>
     </section>
   )

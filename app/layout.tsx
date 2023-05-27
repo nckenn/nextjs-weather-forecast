@@ -7,7 +7,7 @@ import { fontSans } from '@/lib/fonts'
 
 import { ThemeProvider } from "@/components/theme-provider"
 import { SiteHeader } from '@/components/site-header'
-import Provider from "@/components/provider"
+import Provider from "@/app/provider"
 
 
 export const metadata: Metadata = {
