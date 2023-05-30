@@ -5,7 +5,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 import axios, { AxiosError } from 'axios'
-import { Weather, WeatherElement } from '@/types/weather'
+import { List, Weather, WeatherElement } from '@/types/weather'
 
 type PageProps = {
   params: {
@@ -14,7 +14,7 @@ type PageProps = {
 }
 
 async function getWeatherByCity(cityName: string) {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`;
+  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&cnt=20&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`;
   try {
     const res = await axios.get(url);
 
@@ -40,8 +40,6 @@ const Page = async({ params }: PageProps) => {
   if (!session) redirect('/')
   
   const weatherInfo = await getWeatherByCity(cityName) as Weather;
-  
-  const dt = getFormattedDate(weatherInfo?.dt);
 
   return (
     <section className='container grid items-center gap-6 pb-8 pt-6 md:py-10 max-w-4xl'>
@@ -58,14 +56,14 @@ const Page = async({ params }: PageProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {weatherInfo.weather.map((weather: WeatherElement) => (
-            <TableRow key={weather?.id}>
-              <TableCell>{dt}</TableCell>
-              <TableCell>{weatherInfo?.main?.temp}</TableCell>
-              <TableCell className='hidden md:table-cell'>{weather?.description}</TableCell>
-              <TableCell className='hidden md:table-cell'>{weather?.main}</TableCell>
-              <TableCell className='hidden md:table-cell'>{weatherInfo?.main?.pressure}</TableCell>
-              <TableCell className='hidden md:table-cell'>{weatherInfo?.main?.humidity}</TableCell>
+          {weatherInfo.list.map((weather: List, index) => (
+            <TableRow key={index}>
+              <TableCell>{getFormattedDate(weather?.dt)}</TableCell>
+              <TableCell>{weather?.main.temp}</TableCell>
+              <TableCell className='hidden md:table-cell'>{weather?.weather[0].description}</TableCell>
+              <TableCell className='hidden md:table-cell'>{weather?.weather[0].main}</TableCell>
+              <TableCell className='hidden md:table-cell'>{weather?.main?.pressure}</TableCell>
+              <TableCell className='hidden md:table-cell'>{weather?.main?.humidity}</TableCell>
               
             </TableRow>
           ))}
